@@ -21,6 +21,9 @@ export const postApi = createApi({
         url: "/posts/create",
         method: "POST",
         body: JSON.stringify(post),
+        headers: {
+          "Content-Type": "application/json",
+        },
       }),
     }),
     updatePost: builder.mutation<void, Post>({

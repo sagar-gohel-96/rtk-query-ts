@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { PostDetails, Navbar } from "./index";
 import { useDeletePostMutation, usePostsQuery } from "../services/postApi";
 import { Post } from "../models/post.model";
+import { useNavigate } from "react-router-dom";
 interface Details {
   open: boolean;
   id: string;
 }
 export const Home = () => {
+  const navigate = useNavigate();
   const [details, setDetails] = useState<Details>({ open: false, id: "1" });
-  const { data, isFetching, isLoading, isSuccess, error } = usePostsQuery();
+  const { data, isFetching, isLoading, isSuccess, error, refetch } =
+    usePostsQuery();
   const [deletePost] = useDeletePostMutation();
   return (
     <div
@@ -37,9 +40,6 @@ export const Home = () => {
             return (
               <div
                 key={index}
-                onClick={() => {
-                  setDetails({ open: !details.open, id: post._id! });
-                }}
                 style={{
                   backgroundColor: "#abe5ed",
                   padding: "20px",
@@ -54,7 +54,25 @@ export const Home = () => {
                   )}
                 </span>
                 <button
-                  onClick={() => deletePost(post._id)}
+                  style={{
+                    backgroundColor: "bisque",
+                    padding: "6px ",
+                    border: "none",
+                    fontWeight: "bolder",
+                    margin: "10px",
+                  }}
+                  onClick={() => {
+                    setDetails({ open: !details.open, id: post._id! });
+                  }}
+                >
+                  Show details
+                </button>
+                <button
+                  onClick={() => {
+                    deletePost(post._id).then(() => {
+                      refetch();
+                    });
+                  }}
                   style={{
                     backgroundColor: "bisque",
                     padding: "6px ",
@@ -64,6 +82,19 @@ export const Home = () => {
                   type="button"
                 >
                   Delete
+                </button>
+                <button
+                  onClick={() => navigate("/posts/update", { state: post })}
+                  style={{
+                    backgroundColor: "bisque",
+                    padding: "6px ",
+                    border: "none",
+                    fontWeight: "bolder",
+                    margin: "10px",
+                  }}
+                  type="button"
+                >
+                  Update
                 </button>
               </div>
             );

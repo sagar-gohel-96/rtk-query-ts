@@ -4,8 +4,9 @@ const Routing = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/posts" element={<Home />} />
         <Route path="/posts/create" element={<Form />} />
+        <Route path="/posts/update" element={<Form />} />
       </Routes>
     </div>
   );

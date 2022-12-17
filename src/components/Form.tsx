@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useAddPostMutation } from "../services/postApi";
 import "../Form.css";
 import { Navbar } from "./Navbar";
+import { useNavigate } from "react-router-dom";
 export const Form = () => {
+  const navigate = useNavigate();
   const [formDetails, setFormDetails] = useState({
     title: "",
     body: "",
@@ -29,7 +31,7 @@ export const Form = () => {
           onSubmit={(e) => {
             e.preventDefault();
             setFormDetails({ title: "", body: "" });
-            addPost(formDetails);
+            addPost(formDetails).then(() => navigate("/"));
           }}
           style={{
             width: "50%",
