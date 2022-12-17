@@ -1,6 +1,8 @@
 import React from "react";
-
-function Navbar() {
+import { useNavigate } from "react-router-dom";
+import { MdAddBox } from "react-icons/md";
+export const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -55,11 +57,23 @@ function Navbar() {
           justifyContent: "space-around",
         }}
       >
-        <h2>Posts</h2>
-        <h2>Add Post</h2>
+        <h2 onClick={() => navigate("/")}>Posts</h2>
+        <h2
+          onClick={() => navigate("/posts/create")}
+          style={{
+            backgroundColor: "#79b88a",
+            padding: "7px",
+            borderRadius: "5px",
+            lineHeight: "25px",
+            display: "flex",
+          }}
+        >
+          <span>Add Post</span>
+          <span style={{ paddingLeft: "15px" }}>
+            <MdAddBox />
+          </span>
+        </h2>
       </div>
     </div>
   );
-}
-
-export default Navbar;
+};

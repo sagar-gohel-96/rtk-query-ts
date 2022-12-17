@@ -2,6 +2,7 @@ import React from "react";
 import { usePostQuery } from "../services/postApi";
 export const PostDetails = ({ id }: { id: string }) => {
   const { data } = usePostQuery(id);
+  if (!data?.data.body) return <></>;
   return (
     <div>
       <b>Details:</b>

@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import React from "react";
-import App from "../src/App";
+import { Form, Home } from "../components/index";
 const Routing = () => {
   return (
     <div>
       <Routes>
-        <Route path="/posts" element={<App />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/posts/create" element={<Form />} />
       </Routes>
     </div>
   );

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Post } from "../models/post.model";
+import { Post, PostPayload } from "../models/post.model";
 export interface ApiResponse<T> {
   data: T;
   success: boolean;
@@ -16,9 +16,9 @@ export const postApi = createApi({
     post: builder.query<ApiResponse<Post>, string>({
       query: (id) => `/posts/${id}`,
     }),
-    addPost: builder.mutation<void, Post>({
+    addPost: builder.mutation<void, PostPayload>({
       query: (post) => ({
-        url: "/posts",
+        url: "/posts/create",
         method: "POST",
         body: JSON.stringify(post),
       }),
@@ -30,7 +30,7 @@ export const postApi = createApi({
         body: rest,
       }),
     }),
-    deletePost: builder.mutation<void, number>({
+    deletePost: builder.mutation<void, string>({
       query: (id) => ({
         url: `/posts/${id}`,
         method: "DELETE",
