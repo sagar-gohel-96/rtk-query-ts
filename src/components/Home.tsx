@@ -3,6 +3,7 @@ import { PostDetails, Navbar } from "./index";
 import { useDeletePostMutation, usePostsQuery } from "../services/postApi";
 import { Post } from "../models/post.model";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 interface Details {
   open: boolean;
   id: string;
@@ -13,9 +14,11 @@ export const Home = () => {
   const { data, isFetching, isLoading, isSuccess, error, refetch } =
     usePostsQuery();
   const [deletePost] = useDeletePostMutation();
+
   useEffect(() => {
     refetch();
-  }, [refetch, data]);
+  }, [refetch]);
+
   return (
     <div
       className="App"

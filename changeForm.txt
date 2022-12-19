@@ -1,0 +1,38 @@
+// const { data, isSuccess } = usePostQuery(param.id!);
+
+// const formInitialData: UserFormType = {
+//   title: data?.data?.title || "",
+//   body: data?.data?.body || "",
+// };
+
+// const [form, setForm] = useState<UserFormType>(formInitialData);
+// console.log("form", form);
+// const handleChange = (e: any) => {
+//   e.persist();
+//   setFormDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+// };
+
+// const handleSubmit = (e: any) => {
+//   e.preventDefault();
+//   console.log("click", form);
+//   const _id = param.id;
+//   if (updateDetails) {
+//     updatePost({ _id, ...form }).then(() => {
+//       navigate("/posts");
+//     });
+//   } else {
+//     addPost(form).then(() => navigate("/posts"));
+//   }
+// };
+
+// const handleOnChange = (e: any) => {
+//   e.persist();
+//   setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+// };
+// onSubmit={handleSubmit}
+// value={form.title}
+// onChange={handleOnChange}
+// interface UserFormType {
+//   body: string;
+//   title: string;
+// }

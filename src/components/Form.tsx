@@ -3,6 +3,7 @@ import { useAddPostMutation, useUpdatePostMutation } from "../services/postApi";
 import "../Form.css";
 import { Navbar } from "./Navbar";
 import { useNavigate, useParams } from "react-router-dom";
+
 export const Form = (props: any) => {
   const updateDetails = props.updateDetails;
   const navigate = useNavigate();
@@ -10,10 +11,10 @@ export const Form = (props: any) => {
     title: "",
     body: "",
   });
+  const param = useParams();
+
   const [addPost] = useAddPostMutation();
   const [updatePost] = useUpdatePostMutation();
-  const param = useParams();
-  console.log(param.id);
 
   return (
     <div className="form">
@@ -35,7 +36,7 @@ export const Form = (props: any) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            setFormDetails({ title: "", body: "" });
+            console.log(formDetails);
             const _id = param.id;
             if (updateDetails) {
               updatePost({ _id, ...formDetails }).then(() => {
@@ -68,11 +69,12 @@ export const Form = (props: any) => {
           <label htmlFor="">Description :</label>
           <br />
           <textarea
-            defaultValue={updateDetails ? updateDetails.body : formDetails.body}
+            name="body"
             id="body"
             onChange={(e) =>
               setFormDetails({ ...formDetails, body: e.target.value })
             }
+            defaultValue={updateDetails ? updateDetails.body : formDetails.body}
           ></textarea>
           <br />
           <button className="formButton" type="submit">
