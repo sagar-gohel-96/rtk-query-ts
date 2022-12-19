@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { useAddPostMutation } from "../services/postApi";
+import { useAddPostMutation, useUpdatePostMutation } from "../services/postApi";
 import "../Form.css";
 import { Navbar } from "./Navbar";
-import { useNavigate } from "react-router-dom";
-export const Form = () => {
+import { useNavigate, useParams } from "react-router-dom";
+export const Form = (props: any) => {
+  const updateDetails = props.updateDetails;
   const navigate = useNavigate();
   const [formDetails, setFormDetails] = useState({
     title: "",
     body: "",
   });
   const [addPost] = useAddPostMutation();
+  const [updatePost] = useUpdatePostMutation();
+  const param = useParams();
+  console.log(param.id);
+
   return (
     <div className="form">
       <div className="navbar">
@@ -31,7 +36,14 @@ export const Form = () => {
           onSubmit={(e) => {
             e.preventDefault();
             setFormDetails({ title: "", body: "" });
-            addPost(formDetails).then(() => navigate("/"));
+            const _id = param.id;
+            if (updateDetails) {
+              updatePost({ _id, ...formDetails }).then(() => {
+                navigate("/posts");
+              });
+            } else {
+              addPost(formDetails).then(() => navigate("/posts"));
+            }
           }}
           style={{
             width: "50%",
@@ -43,9 +55,11 @@ export const Form = () => {
           <br />
           <input
             type="text"
+            defaultValue={
+              updateDetails ? updateDetails.title : formDetails.title
+            }
             placeholder="Enter your post title"
             name="title"
-            value={formDetails.title}
             onChange={(e) =>
               setFormDetails({ ...formDetails, title: e.target.value })
             }
@@ -54,14 +68,16 @@ export const Form = () => {
           <label htmlFor="">Description :</label>
           <br />
           <textarea
-            value={formDetails.body}
+            defaultValue={updateDetails ? updateDetails.body : formDetails.body}
             id="body"
             onChange={(e) =>
               setFormDetails({ ...formDetails, body: e.target.value })
             }
           ></textarea>
           <br />
-          <input type="submit" placeholder="Submit" />
+          <button className="formButton" type="submit">
+            {updateDetails ? "Update" : "Submit"}
+          </button>
         </form>
       </div>
     </div>

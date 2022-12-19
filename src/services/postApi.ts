@@ -26,11 +26,14 @@ export const postApi = createApi({
         },
       }),
     }),
-    updatePost: builder.mutation<void, Post>({
+    updatePost: builder.mutation<void, Partial<Post>>({
       query: ({ _id, ...rest }) => ({
-        url: `/posts/${_id}`,
+        url: `/posts/update/${_id}`,
         method: "PUT",
         body: rest,
+        headers: {
+          "Content-Type": "application/json",
+        },
       }),
     }),
     deletePost: builder.mutation<void, string>({

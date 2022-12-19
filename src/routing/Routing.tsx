@@ -1,12 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import { Form, Home } from "../components/index";
+import { Form, Home, UpdateForm } from "../components/index";
+enum routesMapping {
+  Home = "/posts",
+  Form = "/posts/create",
+  UpdateForm = "/posts/update/:id",
+}
 const Routing = () => {
   return (
     <div>
       <Routes>
-        <Route path="/posts" element={<Home />} />
-        <Route path="/posts/create" element={<Form />} />
-        <Route path="/posts/update" element={<Form />} />
+        <Route path={routesMapping.Home} element={<Home />} />
+        <Route path={routesMapping.Form} element={<Form />} />
+        <Route path={routesMapping.UpdateForm} element={<UpdateForm />} />
       </Routes>
     </div>
   );

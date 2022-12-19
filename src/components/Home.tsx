@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PostDetails, Navbar } from "./index";
 import { useDeletePostMutation, usePostsQuery } from "../services/postApi";
 import { Post } from "../models/post.model";
@@ -13,6 +13,9 @@ export const Home = () => {
   const { data, isFetching, isLoading, isSuccess, error, refetch } =
     usePostsQuery();
   const [deletePost] = useDeletePostMutation();
+  useEffect(() => {
+    refetch();
+  }, [refetch, data]);
   return (
     <div
       className="App"
@@ -26,7 +29,6 @@ export const Home = () => {
       {isLoading && <h2>.....Loading</h2>}
       {isFetching && <h2>.....Fetching</h2>}
       {error && <h3>Something Went Wrong... :(</h3>}
-
       <div
         style={{
           display: "grid",
@@ -84,7 +86,9 @@ export const Home = () => {
                   Delete
                 </button>
                 <button
-                  onClick={() => navigate("/posts/update", { state: post })}
+                  onClick={() =>
+                    navigate(`/posts/update/${post._id}`, { state: post })
+                  }
                   style={{
                     backgroundColor: "bisque",
                     padding: "6px ",
